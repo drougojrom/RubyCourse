@@ -1,3 +1,5 @@
+require_relative 'square_helper'
+
 class Quadratic
   def initialize(a, b, c)
     @a = a
@@ -18,18 +20,20 @@ class Quadratic
   private
 
   def calculate_d
-    (@b * @b) - (4 * @a * @c)
+    squared(@b) - (4 * @a * @c)
   end
 
   def calculate_roots(d)
+    sqrt_d = Math.sqrt(d)
+    divider = (2 * @a)
     if d > 0
-      x1 = -@b + (Math.sqrt(d) / 2 * @a)
-      x2 = -@b - (Math.sqrt(d) / 2 * @a)
-      puts "x1 is: " + x1.to_s
-      puts "x2 is: " + x2.to_s
+      x1 = (-@b + sqrt_d) / divider
+      x2 = (-@b - sqrt_d) / divider
+      puts "x1 is: #{x1}"
+      puts "x2 is: #{x2}"
     elsif d == 0
-      x = -@b / (2 * @a)
-      puts "there is only one root: " + x.to_s
+      x = -@b / divider
+      puts "there is only one root: #{x}"
     end
   end
 end
