@@ -1,3 +1,5 @@
+# funny task, took me some time to figure it out :)
+
 def get_fibo
   array = []
   for i in 0..99
