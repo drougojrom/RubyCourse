@@ -21,14 +21,6 @@ class DateCounter
     previous_days_count += @day
     previous_days_count
   end
-
-  private
-
-  def is_leap?
-    return false unless @year % 4 == 0
-    return true unless @year % 100 == 0
-    @year % 400 == 0
-  end
 end
 
 puts "Enter the days value"
