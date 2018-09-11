@@ -1,4 +1,4 @@
-require_relative 'month_hash'
+require_relative 'fill_hash_helper'
 
 class DateCounter
 
@@ -9,8 +9,17 @@ class DateCounter
   end
 
   def get_date_counter
-    hash = fill_hash(@year, @month)
-    puts hash
+    month_range = 1..@month
+    hash = fill_hash(@year, month_range)
+    previous_days_count = 0
+    hash.each do |k, v|
+      if k < @month
+        previous_days_count += v
+      end
+    end
+
+    previous_days_count += @day
+    previous_days_count
   end
 
   private
@@ -22,5 +31,12 @@ class DateCounter
   end
 end
 
-d = DateCounter.new(1, 1, 2018)
-d.get_date_counter
+puts "Enter the days value"
+day = gets.to_i
+puts "Enter the months value"
+month = gets.to_i
+puts "Enter the years value"
+year = gets.to_i
+
+d = DateCounter.new(day, month, year)
+puts "The selected day number is #{d.get_date_counter}"
