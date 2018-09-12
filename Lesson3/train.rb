@@ -31,23 +31,29 @@ class Train
 
   def set_route(route)
     @route = route
-    @current_station = @route.get_stations_list.first
+    @current_station = stations_list.first
   end
 
   def move_forward
     index = @route.get_stations_list.index(@current_station)
-    @current_station = @route.get_stations_list[index+1]
+    @current_station = stations_list[index+1]
     check_if_final
   end
 
   def move_backwards
     index = @route.get_stations_list.index(@current_station)
-    @current_station = @route.get_stations_list[index-1]
+    @current_station ||= stations_list[index-1]
   end
 
   private
 
   def check_if_final
-    @current_station = @route.get_stations_list.first if @route.get_stations_list.last == @current_station
+    @current_station = stations_list.first if stations_list.last == @current_station
+  end
+
+  private
+
+  def stations_list
+    @route.get_stations_list
   end
 end
