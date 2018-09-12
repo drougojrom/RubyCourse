@@ -1,9 +1,8 @@
 class Station
 
-  attr_accessor :trains
-
   def initialize(name)
     @name = name
+    @trains = Array.new
   end
 
   def accept_train(train)
@@ -14,7 +13,8 @@ class Station
     @trains
   end
 
-  def trains_list_typed
+  def trains_list_typed(type)
+    @trains.select { |train| train.type == type }
   end
 
   def send_train

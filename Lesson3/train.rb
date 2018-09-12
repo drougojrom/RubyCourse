@@ -1,6 +1,6 @@
 class Train
 
-  attr_accessor :speed, :route, :current_station
+  attr_accessor :speed, :route, :current_station, :type
 
   def initialize(number, type, length)
     @number = number
@@ -10,7 +10,8 @@ class Train
   end
 
   def increase_speed(speed)
-    @speed = speed
+    @speed += speed
+    @speed = 0 if @speed < 0
   end
 
   def stop
@@ -21,28 +22,52 @@ class Train
     @length
   end
 
-  def add_vagon
+  def add_wagon
     @length += 1 if @speed == 0
   end
 
-  def remove_vagon
-    @length -= 1 if @speed == 0
+  def remove_wagon
+    @length -= 1 if @speed == 0 && @length > 0
   end
 
   def set_route(route)
     @route = route
+    stations_list.first.accept_train(self)
     @current_station = stations_list.first
   end
 
   def move_forward
-    index = @route.get_stations_list.index(@current_station)
-    @current_station = stations_list[index+1]
+    index = stations_list.index(@current_station)
+    @current_station.send_train
+    @current_station ||= stations_list[index+1]
+    @current_station.accept_train(self)
     check_if_final
   end
 
   def move_backwards
-    index = @route.get_stations_list.index(@current_station)
+    index = stations_list.index(@current_station)
+    @current_station.send_train
     @current_station ||= stations_list[index-1]
+    @current_station.accept_train(self)
+  end
+
+  def next_station
+    index = stations_list.index(@current_station)
+    if next_station = stations_list[index + 1]
+      next_station
+    else
+      "This is the last station"
+    end
+  end
+
+  def previous_station
+    index = stations_list.index(@current_station)
+    prev_station = stations_list[index - 1]
+    if prev_station != stations_list.last
+      prev_station
+    else
+      "This is the first station"
+    end
   end
 
   private
