@@ -1,16 +1,12 @@
-module TrainType
-  PASS_TRAIN = 0
-  FREIGHT_TRAIN = 1
-end
-
 class Train
 
   attr_accessor :speed, :route, :current_station
 
   def initialize(number, type, length)
     @number = number
-    @type = type if type.is_a? TrainType
+    @type = type if type == :pass || type == :freight
     @length = length
+    @speed = 0
   end
 
   def increase_speed(speed)
@@ -35,23 +31,23 @@ class Train
 
   def set_route(route)
     @route = route
-    @current_station = @route.first
+    @current_station = @route.get_stations_list.first
   end
 
   def move_forward
-    index = @route.index(@current_station)
-    @current_station = @route[index+1]
+    index = @route.get_stations_list.index(@current_station)
+    @current_station = @route.get_stations_list[index+1]
     check_if_final
   end
 
   def move_backwards
-    index = @route.index(@current_station)
-    @current_station = @route[index-1]
+    index = @route.get_stations_list.index(@current_station)
+    @current_station = @route.get_stations_list[index-1]
   end
 
   private
 
   def check_if_final
-    @current_station = @route.first if @route.last == @current_station
+    @current_station = @route.get_stations_list.first if @route.get_stations_list.last == @current_station
   end
 end
