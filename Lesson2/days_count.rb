@@ -1,13 +1,6 @@
 def get_date_counter(day, month, year)
-  previous_days_count = 0
-  @months[1] += 1 if is_leap?(year)
-  @months.each_with_index do |value, index|
-    if index < month
-      previous_days_count += value
-    end
-  end
-  previous_days_count += day
-  previous_days_count
+  @months[2] += 1 if is_leap?(year)
+  @months[0...month].sum + day
 end
 
 def is_leap?(year)
@@ -16,7 +9,7 @@ def is_leap?(year)
   year % 400 == 0
 end
 
-@months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+@months = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 puts "Enter the days value"
 day = gets.to_i
@@ -25,4 +18,4 @@ month = gets.to_i
 puts "Enter the years value"
 year = gets.to_i
 
-puts "The selected day number is #{get_date_counter(day, month-1, year)}"
+puts "The selected day number is #{get_date_counter(day, month, year)}"
