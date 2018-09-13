@@ -1,3 +1,6 @@
+require './station.rb'
+require './route.rb'
+
 class Train
 
   attr_accessor :speed, :route, :current_station, :type
@@ -21,6 +24,10 @@ class Train
   def get_length
     @length
   end
+  
+  def get_current_station
+    @current_station
+  end
 
   def add_wagon
     @length += 1 if @speed == 0
@@ -38,17 +45,22 @@ class Train
 
   def move_forward
     index = stations_list.index(@current_station)
-    @current_station.send_train
-    @current_station ||= stations_list[index+1]
-    @current_station.accept_train(self)
-    check_if_final
+    next_station = stations_list[index+1]
+    unless next_station.nil?
+      @current_station.send_train
+      @current_station = next_station
+      @current_station.accept_train(self)
+    end
   end
 
   def move_backwards
     index = stations_list.index(@current_station)
-    @current_station.send_train
-    @current_station ||= stations_list[index-1]
-    @current_station.accept_train(self)
+    next_station = stations_list[index-1]
+    if !next_station.nil? && next_station != stations_list.last
+      @current_station.send_train
+      @current_station = next_station
+      @current_station.accept_train(self)
+    end
   end
 
   def next_station
@@ -68,12 +80,6 @@ class Train
     else
       "This is the first station"
     end
-  end
-
-  private
-
-  def check_if_final
-    @current_station = stations_list.first if stations_list.last == @current_station
   end
 
   private
