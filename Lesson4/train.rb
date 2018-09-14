@@ -18,6 +18,14 @@ class Train
     @wagons.pop
   end
 
+  def number
+    @number
+  end
+
+  def type
+    @type
+  end
+
   def get_length
     @wagons.length
   end

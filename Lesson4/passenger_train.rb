@@ -1,6 +1,7 @@
 require './train.rb'
 
 class PassengerTrain < Train
+  attr_reader :type
 
   def initialize(number)
     @type = :pass
@@ -16,8 +17,4 @@ class PassengerTrain < Train
       puts "This train has a different type"
     end
   end
-
-  private
-  # we don't have to give a direct acceess to train's type
-  attr_reader :type
 end

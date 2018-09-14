@@ -37,7 +37,7 @@ end
 def show_trains
   index = 1
   @created_trains.each do |train|
-    puts "#{index} - #{train.number}"
+    puts "#{index} - Train#{train.type}:#{train.number}"
     index += 1
   end
 end
@@ -95,8 +95,6 @@ def create_for(input)
       @created_routes << @route
       puts "You've created a new route with id: #{@route.object_id}"
     end
-  else
-    puts "wow"
   end
 end
 
@@ -130,7 +128,6 @@ def add_for(input)
     puts "Invalid input"
   end
 end
-
 
 def add
   puts "What do you want to add?"
@@ -170,9 +167,7 @@ while true
   puts "3 - Move train"
   puts "4 - Show list of stations or trains for routes"
   puts "5 - quit"
-
   input = gets.to_i
-
   case input
   when 1
     create
