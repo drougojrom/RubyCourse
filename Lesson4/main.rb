@@ -25,10 +25,11 @@ def create
   end
 end
 
-def show_stations
+def show_stations(include_trains = false, train_type = :pass)
   index = 1
   @created_stations.each do |station|
     puts "#{index} - #{station.name}"
+    puts "#{station.trains_list_typed(train_type)}"
     index += 1
   end
 end
@@ -123,6 +124,7 @@ def add_for(input)
       puts "Route updated!"
     end
   when 2
+    puts "Select a train"
   when 3
   else
     puts "Invalid input"
@@ -147,7 +149,9 @@ def show
   input = gets.to_i
   case input
   when 1
-    show_stations
+    puts "Which type of trains do you want to see? 1 - pass, 2 - cargo"
+    type = gets.to_i == 1 ? :pass : :cargo
+    show_stations(true, type)
   when 2
     show_trains
   when 3
