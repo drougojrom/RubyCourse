@@ -99,8 +99,44 @@ def create_for(input)
   end
 end
 
+def add_for(input)
+  case input
+  when 1
+    puts "Select a route"
+    show_routes
+    route_index = gets.to_i - 1
+    route = @created_routes[route_index]
+    available_stations = @created_stations.select {|station| !route.get_stations_list.include? station }
+    if available_stations.length == 0
+      puts "All created stations are already included into the route"
+    else
+      puts "Select a station"
+      index = 1
+      available_stations.each do |station|
+        puts "#{index} - #{station.name}"
+        index += 1
+      end
+      selected_index = gets.to_i
+      selected_station = available_stations[selected_index - 1]
+      @created_routes[route_index].add_station(selected_station,
+                                               @created_routes[route_index].get_stations_list.length - 1)
+      puts "Route updated!"
+    end
+  when 2
+  when 3
+  else
+    puts "Invalid input"
+  end
+end
+
 
 def add
+  puts "What do you want to add?"
+  puts "1 - Station to Route"
+  puts "2 - Wagon to train"
+  puts "3 - Route to train"
+  input = gets.to_i
+  add_for(input)
 end
 
 def move

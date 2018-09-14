@@ -7,6 +7,10 @@ class Station
     @trains = Array.new
   end
 
+  def name
+    @name
+  end
+
   def accept_train(train)
     @trains << train
   end
