@@ -1,3 +1,5 @@
+require './train.rb'
+
 class PassengerTrain < Train
 
   def initialize(number)
