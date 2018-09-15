@@ -6,6 +6,10 @@ class PassengerWagon
     @type = :pass
   end
 
+  def type
+    @type
+  end
+
   private
   attr_writer :type
 end

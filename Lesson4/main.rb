@@ -8,6 +8,9 @@ require './passenger_train.rb'
 @created_wagons = Array.new
 @created_routes = Array.new
 
+def remove
+end
+
 def create
   puts "What do you want to create?"
   puts "1 - Create a Train"
@@ -123,7 +126,26 @@ def add_for(input)
     end
   when 2
     puts "Select a train"
+    show_trains
+    train_index = gets.to_i - 1
+    train = @created_trains[train_index]
+    puts "Select a wagon"
+    available_wagons = @created_wagons.select { |wagon| wagon.type == train.type }
+    filtered_wagons = available_wagons.select { |wagon| !train.wagons.include? wagon}
+    index = 1
+    filtered_wagons.each do |wagon|
+      puts "#{index} - #{wagon}"
+      index += 1
+    end
+    selected_index = gets.to_i
+    selected_wagon = filtered_wagons[selected_index - 1]
+    if @created_trains[train_index].add_wagon(selected_wagon)
+      puts "Wagon added to train #{@created_trains[train_index].wagons}"
+    end
   when 3
+    puts "Select a route"
+    show_routes
+
   else
     puts "Invalid input"
   end
@@ -164,9 +186,10 @@ while true
   puts "What do you want to do?"
   puts "1 - Create Train/Station/Route/Wagon"
   puts "2 - Add Stations to Routes, wagons to trains, Routes to trains"
-  puts "3 - Move train"
-  puts "4 - Show list of stations or trains for routes"
-  puts "5 - quit"
+  puts "3 - Remove station from Route/wagon from train"
+  puts "4 - Move train"
+  puts "5 - Show list of stations or trains for routes"
+  puts "6 - quit"
   input = gets.to_i
   case input
   when 1
@@ -174,10 +197,12 @@ while true
   when 2
     add
   when 3
-    move
+    remove
   when 4
-    show
+    move
   when 5
+    show
+  when 6
     break
   else
     puts "Invalid input"

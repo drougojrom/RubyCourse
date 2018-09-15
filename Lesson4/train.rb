@@ -30,6 +30,10 @@ class Train
     @wagons.length
   end
 
+  def wagons
+    @wagons
+  end
+
   def set_route(route)
     @route = route
     stations_list.first.accept_train(self)
