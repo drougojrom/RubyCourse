@@ -137,15 +137,28 @@ def add_for(input)
       puts "#{index} - #{wagon}"
       index += 1
     end
-    selected_index = gets.to_i
-    selected_wagon = filtered_wagons[selected_index - 1]
+    selected_index = gets.to_i - 1
+    selected_wagon = filtered_wagons[selected_index]
     if @created_trains[train_index].add_wagon(selected_wagon)
       puts "Wagon added to train #{@created_trains[train_index].wagons}"
     end
   when 3
     puts "Select a route"
     show_routes
-
+    route_index = gets.to_i - 1
+    selected_route = @created_routes[route_index]
+    puts "Select a train for that route"
+    available_trains = @created_trains.select { |created_train| created_train.route != selected_route }
+    index = 1
+    available_trains.each do |available_train|
+      puts "#{index} - #{available_train}"
+      index += 1
+    end
+    selected_available_train_index = gets.to_i - 1
+    selected_available_train = available_trains[selected_available_train_index]
+    if @created_trains[selected_available_train_index].set_route(selected_route)
+      puts "Route #{selected_route}, added for a train #{selected_available_train}"
+    end
   else
     puts "Invalid input"
   end

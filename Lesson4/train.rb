@@ -26,6 +26,10 @@ class Train
     @type
   end
 
+  def route
+    @route
+  end
+
   def get_length
     @wagons.length
   end
