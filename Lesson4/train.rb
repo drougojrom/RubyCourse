@@ -1,5 +1,6 @@
 require './station.rb'
 require './route.rb'
+require 'pry'
 
 class Train
 
@@ -47,16 +48,18 @@ class Train
   def move_forward
     index = stations_list.index(@current_station)
     @current_station.send_train
-    @current_station ||= stations_list[index+1]
-    @current_station.accept_train(self)
-    check_if_final
+    @current_station = nil
+    if @current_station = stations_list[index+1]
+      @current_station.accept_train(self)
+    end
   end
 
   def move_backwards
     index = stations_list.index(@current_station)
     @current_station.send_train
-    @current_station ||= stations_list[index-1]
-    @current_station.accept_train(self)
+    if @current_station = stations_list[index-1]
+      @current_station.accept_train(self)
+    end
   end
 
   def next_station
@@ -79,10 +82,6 @@ class Train
   end
 
   private
-  # internal method, which we don't call ourselves
-  def check_if_final
-    @current_station = stations_list.first if stations_list.last == @current_station
-  end
 
   # shortcut for repeating call, dont't need to call ourselves
   def stations_list

@@ -174,6 +174,23 @@ def add
 end
 
 def move
+  puts "Select a train which you want to move"
+  show_trains
+  selected_train_index = gets.to_i - 1
+  puts "Do you want to move it forward or backward? 1 - forward, 2 - backward"
+  selected_action = gets.to_i
+  case selected_action
+  when 1
+    if @created_trains[selected_train_index].move_forward
+      puts "Selected train moved forward"
+    else
+      puts "no"
+    end
+  when 2
+    if @created_trains[selected_train_index].move_backwards
+      puts "Selected train moved backward"
+    end
+  end
 end
 
 def show
