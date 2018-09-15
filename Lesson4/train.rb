@@ -1,16 +1,10 @@
 require './station.rb'
 require './route.rb'
+require 'pry'
 
 class Train
 
-  attr_accessor :speed, :route, :current_station, :type
-
-  def initialize(number, type, length)
-    @number = number
-    @type = type if type == :pass || type == :freight
-    @length = length
-    @speed = 0
-  end
+  attr_accessor :route, :current_station, :wagons
 
   def increase_speed(speed)
     @speed += speed
@@ -21,20 +15,28 @@ class Train
     @speed = 0
   end
 
-  def get_length
-    @length
-  end
-
-  def get_current_station
-    @current_station
-  end
-
-  def add_wagon
-    @length += 1 if @speed == 0
-  end
-
   def remove_wagon
-    @length -= 1 if @speed == 0 && @length > 0
+    @wagons.pop
+  end
+
+  def number
+    @number
+  end
+
+  def type
+    @type
+  end
+
+  def route
+    @route
+  end
+
+  def get_length
+    @wagons.length
+  end
+
+  def wagons
+    @wagons
   end
 
   def set_route(route)
@@ -45,20 +47,17 @@ class Train
 
   def move_forward
     index = stations_list.index(@current_station)
-    next_station = stations_list[index+1]
-    unless next_station.nil?
-      @current_station.send_train
-      @current_station = next_station
+    @current_station.send_train
+    @current_station = nil
+    if @current_station = stations_list[index+1]
       @current_station.accept_train(self)
     end
   end
 
   def move_backwards
     index = stations_list.index(@current_station)
-    next_station = stations_list[index-1]
-    if !next_station.nil? && next_station != stations_list.last
-      @current_station.send_train
-      @current_station = next_station
+    @current_station.send_train
+    if @current_station = stations_list[index-1]
       @current_station.accept_train(self)
     end
   end
@@ -84,6 +83,7 @@ class Train
 
   private
 
+  # shortcut for repeating call, dont't need to call ourselves
   def stations_list
     @route.get_stations_list
   end
