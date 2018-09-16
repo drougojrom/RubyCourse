@@ -4,7 +4,4 @@ class Wagon
   def type
     @type
   end
-
-  private
-  attr_writer :type
 end

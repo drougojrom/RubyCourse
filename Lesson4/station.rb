@@ -4,7 +4,7 @@ class Station
 
   def initialize(name)
     @name = name
-    @trains = Array.new
+    @trains = []
   end
 
   def name

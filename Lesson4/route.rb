@@ -3,7 +3,7 @@ class Route
   def initialize(start_station, end_station)
     @start_station = start_station
     @end_station = end_station
-    @stations = Array.new
+    @stations = []
     @stations << @start_station
     @stations << @end_station
   end

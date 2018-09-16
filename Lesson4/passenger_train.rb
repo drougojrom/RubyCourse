@@ -7,6 +7,6 @@ class PassengerTrain < Train
     @type = :pass
     @number = number
     @speed = 0
-    @wagons = Array.new
+    @wagons = []
   end
 end

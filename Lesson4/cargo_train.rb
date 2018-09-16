@@ -5,6 +5,6 @@ class CargoTrain < Train
     @type = :cargo
     @number = number
     @speed = 0
-    @wagons = Array.new
+    @wagons = []
   end
 end

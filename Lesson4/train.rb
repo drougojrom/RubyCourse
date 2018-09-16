@@ -91,8 +91,6 @@ class Train
   end
 
   private
-  attr_writer :type
-
   # shortcut for repeating call, dont't need to call ourselves
   def stations_list
     @route.get_stations_list
