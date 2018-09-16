@@ -1,15 +1,7 @@
-class CargoWagon
+require './wagon.rb'
 
-  attr_reader :type
-
+class CargoWagon < Wagon
   def initialize
     @type = :cargo
   end
-
-  def type
-    @type
-  end
-
-  private
-  attr_writer :type
 end

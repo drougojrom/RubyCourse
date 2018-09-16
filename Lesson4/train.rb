@@ -5,6 +5,7 @@ require 'pry'
 class Train
 
   attr_accessor :route, :current_station, :wagons
+  attr_reader :type
 
   def increase_speed(speed)
     @speed += speed
@@ -45,6 +46,14 @@ class Train
     @current_station = stations_list.first
   end
 
+  def add_wagon(wagon)
+    if wagon.type == @type
+      @wagons << wagon
+    else
+      puts "This train has a different type"
+    end
+  end
+
   def move_forward
     index = stations_list.index(@current_station)
     @current_station.send_train
@@ -82,6 +91,7 @@ class Train
   end
 
   private
+  attr_writer :type
 
   # shortcut for repeating call, dont't need to call ourselves
   def stations_list
