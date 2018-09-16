@@ -3,10 +3,10 @@ require './cargo_train.rb'
 require './passenger_wagon.rb'
 require './passenger_train.rb'
 
-@created_trains = Array.new
-@created_stations = Array.new
-@created_wagons = Array.new
-@created_routes = Array.new
+@created_trains = []
+@created_stations = []
+@created_wagons = []
+@created_routes = []
 
 def remove
   puts "What do you want to remove? 1 - wagon from train, 2 - Station from a route"
