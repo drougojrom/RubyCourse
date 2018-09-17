@@ -9,5 +9,6 @@ class PassengerTrain < Train
     @speed = 0
     @wagons = []
     @@trains << self
+    send :register_instance
   end
 end

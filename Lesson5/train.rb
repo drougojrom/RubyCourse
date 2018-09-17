@@ -5,14 +5,24 @@ require './producer_company.rb'
 class Train
 
   include ProducerCompany
+  include InstanceCounter
 
   @@trains = []
+  @@instances = 0
 
   attr_accessor :route, :current_station, :wagons
   attr_reader :type
 
   def self.find(number)
     @@trains.select { |train| train.number == number }
+  end
+
+  def self.instances
+    @@instances
+  end
+
+  def self.register_instance
+    @@instances += 1
   end
 
   def increase_speed(speed)
