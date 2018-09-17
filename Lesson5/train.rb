@@ -6,8 +6,14 @@ class Train
 
   include ProducerCompany
 
+  @@trains = []
+
   attr_accessor :route, :current_station, :wagons
   attr_reader :type
+
+  def self.find(number)
+    @@trains.select { |train| train.number == number }
+  end
 
   def increase_speed(speed)
     @speed += speed

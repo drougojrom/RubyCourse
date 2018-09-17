@@ -6,5 +6,6 @@ class CargoTrain < Train
     @number = number
     @speed = 0
     @wagons = []
+    @@trains << self
   end
 end
