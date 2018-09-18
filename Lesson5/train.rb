@@ -15,7 +15,7 @@ class Train
   attr_reader :type
 
   def self.find(number)
-    @@trains.select { |train| train.number == number }
+    @@trains.select { |train| train.number == number }.first
   end
 
   def self.instances
