@@ -1,30 +1,29 @@
 module InstanceCounter
-
-  @@instances = 0
-
-  def self.instances
-    @@instances
-  end
-
-  def self.register_instance
-    @@instances += 1
-  end
-
   def self.included(base)
     base.extend ClassMethods
     base.send :include, InstanceMethods
   end
 
   module ClassMethods
-    def instances
-      InstanceCounter.instances
+    attr_accessor :instances, :count
+
+    def add_instance(instance)
+      cls = self
+      cls.instances = cls.instances.to_a << instance
+      cls.count = cls.count.to_i + 1
     end
   end
 
   module InstanceMethods
     protected
     def register_instance
-      InstanceCounter.register_instance
+      cls = self.class
+      cls.add_instance(self)
+      loop do
+        cls = cls.superclass
+        break unless cls.included_modules.include?(InstanceCounter)
+        cls.add_instance(self)
+      end
     end
   end
 end

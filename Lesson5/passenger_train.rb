@@ -4,6 +4,6 @@ class PassengerTrain < Train
   attr_reader :type
 
   def initialize(number)
-    super(number, 0, [], :pass)
+    super(number, :pass)
   end
 end

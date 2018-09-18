@@ -17,10 +17,10 @@ class Train
     @@trains.select { |train| train.number == number }.first
   end
 
-  def initialize(number, speed, wagons, type)
+  def initialize(number, type)
     @number = number
-    @speed = speed
-    @wagons = wagons
+    @speed = 0
+    @wagons = []
     @type = type
     @@trains << self
     register_instance
