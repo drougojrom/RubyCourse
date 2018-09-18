@@ -9,7 +9,6 @@ class Train
   include InstanceCounter
 
   @@trains = []
-  @@instances = 0
 
   attr_accessor :route, :current_station, :wagons
   attr_reader :type
@@ -18,12 +17,13 @@ class Train
     @@trains.select { |train| train.number == number }.first
   end
 
-  def initialize(number, speed = 0, wagons = [], type)
+  def initialize(number, speed, wagons, type)
     @number = number
     @speed = speed
     @wagons = wagons
     @type = type
     @@trains << self
+    register_instance
   end
 
   def increase_speed(speed)
