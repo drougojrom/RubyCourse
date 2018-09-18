@@ -106,7 +106,7 @@ def create_train
   number = gets.to_i
   puts "What's your train type? Select 1 for pass and 2 for cargo"
   type = gets.to_i
-  @train = type == 1 ? PassengerTrain.new(number, :pass) : CargoTrain.new(number, :cargo)
+  @train = type == 1 ? PassengerTrain.new(number) : CargoTrain.new(number)
   @created_trains << @train
   puts "You've created a new train with id: #{@train.object_id}"
 end

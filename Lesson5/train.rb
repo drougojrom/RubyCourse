@@ -18,21 +18,12 @@ class Train
     @@trains.select { |train| train.number == number }.first
   end
 
-  def self.instances
-    @@instances
-  end
-
-  def self.register_instance
-    @@instances += 1
-  end
-
   def initialize(number, speed = 0, wagons = [], type)
     @number = number
     @speed = speed
     @wagons = wagons
     @type = type
     @@trains << self
-    send :register_instance
   end
 
   def increase_speed(speed)
