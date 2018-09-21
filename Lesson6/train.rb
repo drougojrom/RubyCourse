@@ -24,9 +24,9 @@ class Train
     @speed = 0
     @wagons = []
     @type = type
+    validate!
     @@trains << self
     register_instance
-    validate!
   end
 
   def increase_speed(speed)
@@ -113,9 +113,12 @@ class Train
   end
 
   def valid?
-    validate!
-  rescue
-    false
+    if !validate!
+      puts "The number or type is invalid. Try to create another one"
+      false
+    else
+      true
+    end
   end
 
   private
@@ -125,8 +128,10 @@ class Train
   end
 
   def validate!
-    raise "Number has invalid format" if number !~ NUMBER_FORMAT
-    raise "Type can be either passenger or cargo" if type != 1 || type != 2
-    true
+    begin
+      raise "Number has invalid format" if @number !~ NUMBER_FORMAT
+      true
+    rescue
+    end
   end
 end

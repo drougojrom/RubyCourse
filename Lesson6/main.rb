@@ -106,9 +106,19 @@ def create_train
   number = gets.to_s
   puts "What's your train type? Select 1 for pass and 2 for cargo"
   type = gets.to_i
-  @train = type == 1 ? PassengerTrain.new(number) : CargoTrain.new(number)
-  @created_trains << @train
-  puts "You've created a new train with id: #{@train.object_id}"
+  case type
+  when 1
+    @train = PassengerTrain.new(number)
+  when 2
+    @train = CargoTrain.new(number)
+  else
+    puts "The train with no type can't be created"
+    return
+  end
+  if @train.valid?
+    @created_trains << @train
+    puts "You've created a new train with number: #{@train.number}"
+  end
 end
 
 def create_station
@@ -186,49 +196,49 @@ def add_station_to_route
 end
 
 def add_wagon_to_train
-   puts "Select a train"
-    show_trains
-    train_index = gets.to_i - 1
-    if train = @created_trains[train_index]
-      puts "Select a wagon"
-      if available_wagons = @created_wagons.select { |wagon| wagon.type == train.type }
-        filtered_wagons = available_wagons.select { |wagon| !train.wagons.include? wagon}
-        index = 1
-        filtered_wagons.each do |wagon|
-          puts "#{index} - #{wagon}"
-          index += 1
-        end
-        selected_index = gets.to_i - 1
-        selected_wagon = filtered_wagons[selected_index]
-        if @created_trains[train_index].add_wagon(selected_wagon)
-          puts "Wagon added to train #{@created_trains[train_index].wagons}"
-        end
-      else
-        puts "There is no trains"
+  puts "Select a train"
+  show_trains
+  train_index = gets.to_i - 1
+  if train = @created_trains[train_index]
+    puts "Select a wagon"
+    if available_wagons = @created_wagons.select { |wagon| wagon.type == train.type }
+      filtered_wagons = available_wagons.select { |wagon| !train.wagons.include? wagon}
+      index = 1
+      filtered_wagons.each do |wagon|
+        puts "#{index} - #{wagon}"
+        index += 1
       end
+      selected_index = gets.to_i - 1
+      selected_wagon = filtered_wagons[selected_index]
+      if @created_trains[train_index].add_wagon(selected_wagon)
+        puts "Wagon added to train #{@created_trains[train_index].wagons}"
+      end
+    else
+      puts "There is no trains"
     end
+  end
 end
 
 def add_route_to_train
   puts "Select a route"
-    show_routes
-    route_index = gets.to_i - 1
-    if selected_route = @created_routes[route_index]
-      puts "Select a train for that route"
-      available_trains = @created_trains.select { |created_train| created_train.route != selected_route }
-      index = 1
-      available_trains.each do |available_train|
-        puts "#{index} - #{available_train}"
-        index += 1
-      end
-      selected_available_train_index = gets.to_i - 1
-      selected_available_train = available_trains[selected_available_train_index]
-      if @created_trains[selected_available_train_index].set_route(selected_route)
-        puts "Route #{selected_route}, added for a train #{selected_available_train}"
-      end
-    else
-      puts "There is no routes"
+  show_routes
+  route_index = gets.to_i - 1
+  if selected_route = @created_routes[route_index]
+    puts "Select a train for that route"
+    available_trains = @created_trains.select { |created_train| created_train.route != selected_route }
+    index = 1
+    available_trains.each do |available_train|
+      puts "#{index} - #{available_train}"
+      index += 1
     end
+    selected_available_train_index = gets.to_i - 1
+    selected_available_train = available_trains[selected_available_train_index]
+    if @created_trains[selected_available_train_index].set_route(selected_route)
+      puts "Route #{selected_route}, added for a train #{selected_available_train}"
+    end
+  else
+    puts "There is no routes"
+  end
 end
 
 def add_for(input)
