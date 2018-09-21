@@ -36,8 +36,8 @@ class Route
 
   private
   def validate!
-    raise "Start station can't be nil" if @start_station.nil?
-    raise "End station can't be nil" if @end_station.nil?
+    raise "Start station can't be nil" if !@start_station.nil?
+    raise "End station can't be nil" if !@end_station.nil?
     true
   end
 end

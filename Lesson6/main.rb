@@ -125,8 +125,10 @@ def create_station
   puts "What's the name of your station?"
   name = gets.chomp
   @station = Station.new name
-  @created_stations << @station
-  puts "You've created a new station with id: #{@station.object_id}"
+  if @station.valid?
+    @created_stations << @station
+    puts "You've created a new station with name: #{@station.name}"
+  end
 end
 
 def create_wagon

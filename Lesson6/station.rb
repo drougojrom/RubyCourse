@@ -15,8 +15,13 @@ class Station
   def initialize(name)
     @name = name
     @trains = []
+    validate!
     @@stations << self
     register_instance
+  end
+
+  def valid?
+    validate!
   end
 
   def name
@@ -37,5 +42,16 @@ class Station
 
   def send_train
     @trains.pop
+  end
+
+  private
+  def validate!
+    begin
+      raise "Name can't be nil!" if !@name.nil?
+      true
+    rescue
+      puts "Invalid name"
+      false
+    end
   end
 end

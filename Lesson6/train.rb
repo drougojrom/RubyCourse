@@ -132,6 +132,7 @@ class Train
       raise "Number has invalid format" if @number !~ NUMBER_FORMAT
       true
     rescue
+      false
     end
   end
 end
