@@ -11,7 +11,9 @@ class Train
   @@trains = []
 
   attr_accessor :route, :current_station, :wagons
-  attr_reader :type
+  attr_reader :type, :number
+
+  NUMBER_FORMAT = /([a-zA-Z]|[0-9]){3}+(-?)+([a-zA-Z]|[0-9]){2}\b/
 
   def self.find(number)
     @@trains.select { |train| train.number == number }.first
@@ -24,6 +26,7 @@ class Train
     @type = type
     @@trains << self
     register_instance
+    validate!
   end
 
   def increase_speed(speed)
@@ -109,9 +112,21 @@ class Train
     end
   end
 
+  def valid?
+    validate!
+  rescue
+    false
+  end
+
   private
   # shortcut for repeating call, dont't need to call ourselves
   def stations_list
     @route.get_stations_list
+  end
+
+  def validate!
+    raise "Number has invalid format" if number !~ NUMBER_FORMAT
+    raise "Type can be either passenger or cargo" if type != 1 || type != 2
+    true
   end
 end

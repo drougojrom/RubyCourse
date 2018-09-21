@@ -103,7 +103,7 @@ end
 
 def create_train
   puts "What's your train number?"
-  number = gets.to_i
+  number = gets.to_s
   puts "What's your train type? Select 1 for pass and 2 for cargo"
   type = gets.to_i
   @train = type == 1 ? PassengerTrain.new(number) : CargoTrain.new(number)
