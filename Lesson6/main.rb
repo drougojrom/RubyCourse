@@ -132,7 +132,15 @@ end
 def create_wagon
   puts "Which type of wagon do you want to create? Select 1 for pass and 2 for cargo"
   type = gets.to_i
-  @wagon = type == 1 ? PassengerWagon.new : CargoWagon.new
+  case type
+  when 1
+    @wagon = PassengerWagon.new
+  when 2
+    @wagon = CargoWagon.new
+  else
+    puts "Invalid wagon type"
+    return
+  end
   @created_wagons << @wagon
   puts "You've created a new wagon with id: #{@wagon.object_id}"
 end
@@ -151,8 +159,10 @@ def create_route
     return
   else
     @route = Route.new start_station, end_station
-    @created_routes << @route
-    puts "You've created a new route with id: #{@route.object_id}"
+    if @route.valid?
+      @created_routes << @route
+      puts "You've created a new route with id: #{@route.object_id}"
+    end
   end
 end
 
