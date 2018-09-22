@@ -24,10 +24,9 @@ class Train
     @speed = 0
     @wagons = []
     @type = type
-    if validate!
-      @@trains << self
-      register_instance
-    end
+    validate!
+    @@trains << self
+    register_instance
   end
 
   def increase_speed(speed)
@@ -115,6 +114,7 @@ class Train
 
   def valid?
     validate!
+    true
   end
 
   private
@@ -124,12 +124,6 @@ class Train
   end
 
   def validate!
-    begin
-      raise ArgumentError.new("Number has invalid format") if @number !~ NUMBER_FORMAT
-      true
-    rescue ArgumentError => e
-      puts e
-      false
-    end
+    raise ArgumentError.new("Number has invalid format") if @number !~ NUMBER_FORMAT
   end
 end

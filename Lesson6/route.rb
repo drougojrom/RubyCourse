@@ -10,9 +10,8 @@ class Route
     @stations = []
     @stations << @start_station
     @stations << @end_station
-    if validate!
-      register_instance
-    end
+    validate!
+    register_instance
   end
 
   def add_station(station, index)
@@ -33,15 +32,12 @@ class Route
 
   def valid?
     validate!
+    true
   end
 
   private
   def validate!
-    raise ArgumentError.new("Start station can't be nil") if @start_station.nil?
-    raise ArgumentError.new("End station can't be nil") if @end_station.nil?
-    true
-  rescue ArgumentError => e
-    puts e.message
-    false
+    raise ArgumentError.new("Start station can't be nil") if @start_station.nil? || @start_station.name.nil?
+    raise ArgumentError.new("End station can't be nil") if @end_station.nil? || @end_station.name.nil?
   end
 end

@@ -108,14 +108,22 @@ def create_train
   type = gets.to_i
   case type
   when 1
-    @train = PassengerTrain.new(number)
+    begin
+      @train = PassengerTrain.new(number)
+    rescue ArgumentError => e
+      puts e.message
+    end
   when 2
-    @train = CargoTrain.new(number)
+    begin
+      @train = CargoTrain.new(number)
+    rescue ArgumentError => e
+      puts e.message
+    end
   else
     puts "The train with no type can't be created"
     return
   end
-  if @train.valid?
+  if @train && @train.valid?
     @created_trains << @train
     puts "You've created a new train with number: #{@train.number}"
   end
@@ -124,8 +132,12 @@ end
 def create_station
   puts "What's the name of your station?"
   name = gets.chomp
-  @station = Station.new name
-  if @station.valid?
+  begin
+    @station = Station.new name
+  rescue ArgumentError => e
+    puts e
+  end
+  if @station && @station.valid?
     @created_stations << @station
     puts "You've created a new station with name: #{@station.name}"
   end
@@ -160,8 +172,12 @@ def create_route
     puts "You've selected the same station twice"
     return
   else
-    @route = Route.new start_station, end_station
-    if @route.valid?
+    begin
+      @route = Route.new start_station, end_station
+    rescue ArgumentError => e
+      puts e.message
+    end
+    if @route && @route.valid?
       @created_routes << @route
       puts "You've created a new route with id: #{@route.object_id}"
     end

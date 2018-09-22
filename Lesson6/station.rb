@@ -15,14 +15,14 @@ class Station
   def initialize(name)
     @name = name
     @trains = []
-    if validate!
-      @@stations << self
-      register_instance
-    end
+    validate!
+    @@stations << self
+    register_instance
   end
 
   def valid?
     validate!
+    true
   end
 
   def name
@@ -47,12 +47,6 @@ class Station
 
   private
   def validate!
-    begin
-      raise ArgumentError.new("Name can't be nil!") if @name.length == 0
-      true
-    rescue ArgumentError => e
-      puts e.message
-      false
-    end
+    raise ArgumentError.new("Name can't be nil!") if @name.length == 0
   end
 end
