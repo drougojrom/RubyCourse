@@ -113,7 +113,7 @@ class Train
   end
 
   def valid?
-    validate!
+    false unless validate!
     true
   end
 

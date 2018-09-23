@@ -110,22 +110,22 @@ def create_train
   when 1
     begin
       @train = PassengerTrain.new(number)
+      @created_trains << @train
+      puts "You've created a new train with number: #{@train.number}"
     rescue ArgumentError => e
       puts e.message
     end
   when 2
     begin
       @train = CargoTrain.new(number)
+      @created_trains << @train
+      puts "You've created a new train with number: #{@train.number}"
     rescue ArgumentError => e
       puts e.message
     end
   else
     puts "The train with no type can't be created"
     return
-  end
-  if @train && @train.valid?
-    @created_trains << @train
-    puts "You've created a new train with number: #{@train.number}"
   end
 end
 
@@ -134,12 +134,10 @@ def create_station
   name = gets.chomp
   begin
     @station = Station.new name
-  rescue ArgumentError => e
-    puts e
-  end
-  if @station && @station.valid?
     @created_stations << @station
     puts "You've created a new station with name: #{@station.name}"
+  rescue ArgumentError => e
+    puts e
   end
 end
 
@@ -174,12 +172,10 @@ def create_route
   else
     begin
       @route = Route.new start_station, end_station
-    rescue ArgumentError => e
-      puts e.message
-    end
-    if @route && @route.valid?
       @created_routes << @route
       puts "You've created a new route with id: #{@route.object_id}"
+    rescue ArgumentError => e
+      puts e.message
     end
   end
 end

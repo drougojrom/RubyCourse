@@ -31,13 +31,18 @@ class Route
   end
 
   def valid?
-    validate!
+    false unless validate!
     true
   end
 
   private
   def validate!
-    raise ArgumentError.new("Start station can't be nil") if @start_station.nil? || @start_station.name.nil?
-    raise ArgumentError.new("End station can't be nil") if @end_station.nil? || @end_station.name.nil?
+    raise ArgumentError.new("Start station can't be nil") if @start_station.nil?
+    raise ArgumentError.new("End station can't be nil") if @end_station.nil?
+    @stations.each do |station|
+      if !station.instance_of? Station
+        raise ArgumentError.new("Should contain only stations")
+      end
+    end
   end
 end

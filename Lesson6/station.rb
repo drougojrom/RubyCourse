@@ -21,7 +21,7 @@ class Station
   end
 
   def valid?
-    validate!
+    false unless validate!
     true
   end
 
