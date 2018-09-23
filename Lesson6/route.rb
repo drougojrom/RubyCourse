@@ -31,8 +31,12 @@ class Route
   end
 
   def valid?
-    false unless validate!
-    true
+    begin
+      validate!
+      true
+    rescue
+      false
+    end
   end
 
   private
