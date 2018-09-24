@@ -58,7 +58,11 @@ class Train
     @wagons.length
   end
 
-  def wagons(&block)
+  def wagons
+    @wagons
+  end
+
+  def wagons_list(&block)
     @wagons.each do |wagon|
       yield(wagon)
     end

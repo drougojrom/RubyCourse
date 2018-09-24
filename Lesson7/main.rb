@@ -83,6 +83,10 @@ def show_trains
   index = 1
   @created_trains.each do |train|
     puts "#{index} - Train#{train.type}:#{train.number}"
+    if train.wagons.length > 0
+      puts "That train has the following wagons:"
+      train.wagons_list { |wagon| puts "#{wagon}" }
+    end
     index += 1
   end
 end
@@ -146,9 +150,13 @@ def create_wagon
   type = gets.to_i
   case type
   when 1
-    @wagon = PassengerWagon.new
+    puts "How many seats do you want to have?"
+    seats = gets.to_i
+    @wagon = PassengerWagon.new seats
   when 2
-    @wagon = CargoWagon.new
+    puts "How much space do you want to have?"
+    space = gets.to_i
+    @wagon = CargoWagon.new space
   else
     puts "Invalid wagon type"
     return
