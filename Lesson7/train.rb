@@ -58,8 +58,10 @@ class Train
     @wagons.length
   end
 
-  def wagons
-    @wagons
+  def wagons(&block)
+    @wagons.each do |wagon|
+      yield(wagon)
+    end
   end
 
   def set_route(route)
