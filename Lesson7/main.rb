@@ -102,6 +102,12 @@ def show_wagons
   index = 1
   @created_wagons.each do |wagon|
     puts "#{index} - #{wagon}"
+    if wagon.instance_of? CargoWagon
+      puts "There is #{wagon.space_left} space in the wagon"
+    elsif
+      puts "The is #{wagon.seats_left} seats left in the wagon"
+    end
+    index += 1
   end
 end
 
@@ -334,6 +340,21 @@ def show
   end
 end
 
+def take
+  puts "Select a wagon"
+  show_wagons
+  wagon_index = gets.to_i - 1
+  selected_wagon = @created_wagons[wagon_index]
+  if !selected_wagon.nil? && selected_wagon.instance_of?(PassengerWagon)
+    @created_wagons[wagon_index].take_seat
+    puts "You've taken one seat"
+  elsif !selected_wagon.nil?
+    puts "How much space out of #{selected_wagon.space_left} you would like to take?"
+    amount = gets.to_i
+    @created_wagons[wagon_index].take_space(amount)
+  end
+end
+
 while true
   puts "What do you want to do?"
   puts "1 - Create Train/Station/Route/Wagon"
@@ -341,7 +362,8 @@ while true
   puts "3 - Remove station from Route/wagon from train"
   puts "4 - Move train"
   puts "5 - Show list of stations or trains for routes"
-  puts "6 - quit"
+  puts "6 - Take a seat or space in wagon"
+  puts "7 - quit"
   input = gets.to_i
   case input
   when 1
@@ -355,6 +377,8 @@ while true
   when 5
     show
   when 6
+    take
+  when 7
     break
   else
     puts "Invalid input"
