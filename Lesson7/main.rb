@@ -70,11 +70,13 @@ def create
   end
 end
 
-def show_stations(include_trains = false, train_type = :pass)
+def show_stations
   index = 1
   @created_stations.each do |station|
     puts "#{index} - #{station.name}"
-    station.trains_list { |train| puts "#{train}" }
+    station.trains_list { |train|
+      puts "Train#{train.type}:#{train.number}, wagons number is #{train.wagons.length}"
+    }
     index += 1
   end
 end
@@ -82,10 +84,17 @@ end
 def show_trains
   index = 1
   @created_trains.each do |train|
-    puts "#{index} - Train#{train.type}:#{train.number}"
+    puts "#{index} - Train#{train.type}:#{train.number}wagons number is #{train.wagons.length}"
     if train.wagons.length > 0
       puts "That train has the following wagons:"
-      train.wagons_list { |wagon| puts "#{wagon}" }
+      train.wagons_list { |wagon|
+        puts "Wagon number is #{wagon.object_id}"
+        if wagon.instance_of? PassengerWagon
+          puts "The amount of free seats is #{wagon.seats_left}"
+        else
+          puts "The amount of free space is #{wagon.free_space}"
+        end
+      }
     end
     index += 1
   end
@@ -326,9 +335,7 @@ def show
   input = gets.to_i
   case input
   when 1
-    puts "Which type of trains do you want to see? 1 - pass, 2 - cargo"
-    type = gets.to_i == 1 ? :pass : :cargo
-    show_stations(true, type)
+    show_stations
   when 2
     show_trains
   when 3
