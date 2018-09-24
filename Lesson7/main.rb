@@ -74,7 +74,7 @@ def show_stations(include_trains = false, train_type = :pass)
   index = 1
   @created_stations.each do |station|
     puts "#{index} - #{station.name}"
-    puts "#{station.trains_list_typed(train_type)}"
+    station.trains_list { |train| puts "#{train}" }
     index += 1
   end
 end

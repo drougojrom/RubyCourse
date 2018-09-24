@@ -37,8 +37,10 @@ class Station
     @trains << train
   end
 
-  def trains_list
-    @trains
+  def trains_list(&block)
+    @trains.each do |train|
+      yield(train)
+    end
   end
 
   def trains_list_typed(type)
