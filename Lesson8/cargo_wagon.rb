@@ -2,6 +2,7 @@ require './wagon.rb'
 
 class CargoWagon < Wagon
   attr_accessor :taken_space
+  attr_reader :free_space
 
   def initialize(space)
     @type = :cargo
