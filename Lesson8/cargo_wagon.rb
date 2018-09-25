@@ -1,5 +1,6 @@
 require './wagon.rb'
 
+# CargoWagon docs
 class CargoWagon < Wagon
   attr_accessor :taken_space
   attr_reader :free_space

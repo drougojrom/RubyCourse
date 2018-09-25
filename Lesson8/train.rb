@@ -3,6 +3,7 @@ require './route.rb'
 require './producer_company.rb'
 require 'pry'
 
+# Train docs
 class Train
   include ProducerCompany
   include InstanceCounter
@@ -84,7 +85,8 @@ class Train
 
   def next_station
     index = stations_list.index(@current_station)
-    return 'This is the last station' unless (next_station = stations_list[index + 1])
+    next_station = stations_list[index + 1]
+    return 'This is the last station' unless next_station
 
     next_station
   end

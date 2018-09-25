@@ -1,5 +1,6 @@
 require './wagon.rb'
 
+# PassengerWagon docs
 class PassengerWagon < Wagon
   attr_accessor :taken_seats
 

@@ -4,6 +4,8 @@ require './passenger_wagon.rb'
 require './passenger_train.rb'
 require './instance_counter.rb'
 
+# Main docs
+
 @created_trains = []
 @created_stations = []
 @created_wagons = []
@@ -219,7 +221,9 @@ def add_station_to_route
   show_routes
   route_index = gets.to_i - 1
   if (route = @created_routes[route_index])
-    available_stations = @created_stations.reject { |station| route.stations_list.include? station }
+    available_stations = @created_stations.reject do |station|
+      route.stations_list.include? station
+    end
     if available_stations.empty?
       puts 'All created stations are already included into the route'
     else
@@ -244,23 +248,26 @@ def add_wagon_to_train
   puts 'Select a train'
   show_trains
   train_index = gets.to_i - 1
-  if (train = @created_trains[train_index])
-    puts 'Select a wagon'
-    if (available_wagons = @created_wagons.select { |wagon| wagon.type == train.type })
-      filtered_wagons = available_wagons.reject { |wagon| train.wagons.include? wagon }
-      index = 1
-      filtered_wagons.each do |wagon|
-        puts "#{index} - #{wagon}"
-        index += 1
-      end
-      selected_index = gets.to_i - 1
-      selected_wagon = filtered_wagons[selected_index]
-      if @created_trains[train_index].add_wagon(selected_wagon)
-        puts "Wagon added to train #{@created_trains[train_index].wagons}"
-      end
-    else
-      puts 'There is no trains'
+  return unless (train = @created_trains[train_index])
+  puts 'Select a wagon'
+  if (available_wagons = @created_wagons.select do |wagon|
+    wagon.type == train.type
+  end)
+    filtered_wagons = available_wagons.reject do |wagon|
+      train.wagons.include? wagon
     end
+    index = 1
+    filtered_wagons.each do |wagon|
+      puts "#{index} - #{wagon}"
+      index += 1
+    end
+    selected_index = gets.to_i - 1
+    selected_wagon = filtered_wagons[selected_index]
+    if @created_trains[train_index].add_wagon(selected_wagon)
+      puts "Wagon added to train #{@created_trains[train_index].wagons}"
+    end
+  else
+    puts 'There is no trains'
   end
 end
 
@@ -270,7 +277,9 @@ def add_route_to_train
   route_index = gets.to_i - 1
   if (selected_route = @created_routes[route_index])
     puts 'Select a train for that route'
-    available_trains = @created_trains.reject { |created_train| created_train.route == selected_route }
+    available_trains = @created_trains.reject do |created_train|
+      created_train.route == selected_route
+    end
     index = 1
     available_trains.each do |available_train|
       puts "#{index} - #{available_train}"

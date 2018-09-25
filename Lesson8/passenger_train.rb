@@ -1,5 +1,6 @@
 require './train.rb'
 
+# PassengerTrain docs
 class PassengerTrain < Train
   attr_reader :type
 

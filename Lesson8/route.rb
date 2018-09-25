@@ -1,3 +1,4 @@
+# Route docs
 class Route
   include InstanceCounter
 

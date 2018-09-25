@@ -1,5 +1,6 @@
 require './instance_counter.rb'
 
+# Station docs
 class Station
   include InstanceCounter
 
