@@ -20,21 +20,21 @@ end
 def remove_station
   puts 'Select a route'
   show_routes
-  route_index = gets.to_i - 1
+  r_index = gets.to_i - 1
   index = 1
-  if (selected_route = @created_routes[route_index])
-    puts 'Select a station which you want to remove'
-    selected_route.get_stations_list.each do |station|
-      if station.trains_list.empty?
-        puts "#{index} - #{station.name}"
-        index += 1
-      end
-    end
-    selected_station_index = gets.to_i - 1
-    if @created_routes[route_index].remove_station(selected_station_index)
-      puts 'The station was removed from the route'
+  return unless (selected_route = @created_routes[r_index])
+
+  puts 'Select a station which you want to remove'
+  selected_route.get_stations_list.each do |station|
+    if station.trains_list.empty?
+      puts "#{index} - #{station.name}"
+      index += 1
     end
   end
+  selected_station_index = gets.to_i - 1
+  return unless @created_routes[r_index].remove_station(selected_station_index)
+
+  puts 'The station was removed from the route'
 end
 
 def remove
@@ -84,7 +84,7 @@ def show_trains
   index = 1
   @created_trains.each do |train|
     puts "#{index} - Train#{train.type}:#{train.number}wagons number is #{train.wagons.length}"
-    if train.wagons.!empty?
+    unless train.wagons.empty?
       puts 'That train has the following wagons:'
       train.wagons_list do |wagon|
         puts "Wagon number is #{wagon.object_id}"
