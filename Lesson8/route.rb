@@ -21,7 +21,7 @@ class Route
     @stations.delete_at(index) if index != 0 && index < @stations.length
   end
 
-  def get_stations_list
+  def stations_list
     @stations
   end
 

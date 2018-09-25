@@ -4,6 +4,4 @@ class Wagon
   include ProducerCompany
 
   attr_reader :type
-
-  attr_reader :type
 end

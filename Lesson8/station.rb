@@ -3,7 +3,7 @@ require './instance_counter.rb'
 class Station
   include InstanceCounter
 
-  attr_reader :name
+  attr_reader :name, :trains
 
   @@stations = []
 
@@ -25,8 +25,6 @@ class Station
   rescue StandardError
     false
   end
-
-  attr_reader :name
 
   def accept_train(train)
     @trains << train

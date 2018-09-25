@@ -41,17 +41,9 @@ class Train
     @wagons.pop
   end
 
-  attr_reader :number
-
-  attr_reader :type
-
-  attr_reader :route
-
   def get_length
     @wagons.length
   end
-
-  attr_reader :wagons
 
   def wagons_list
     @wagons.each do |wagon|
@@ -77,26 +69,24 @@ class Train
     index = stations_list.index(@current_station)
     @current_station.send_train
     @current_station = nil
-    if @current_station = stations_list[index + 1]
-      @current_station.accept_train(self)
-    end
+    return unless (@current_station = stations_list[index + 1])
+
+    @current_station.accept_train(self)
   end
 
   def move_backwards
     index = stations_list.index(@current_station)
     @current_station.send_train
-    if @current_station = stations_list[index - 1]
-      @current_station.accept_train(self)
-    end
+    return unless (@current_station = stations_list[index - 1])
+
+    @current_station.accept_train(self)
   end
 
   def next_station
     index = stations_list.index(@current_station)
-    if next_station = stations_list[index + 1]
-      next_station
-    else
-      'This is the last station'
-    end
+    return 'This is the last station' unless (next_station = stations_list[index + 1])
+
+    next_station
   end
 
   def previous_station
@@ -118,9 +108,11 @@ class Train
 
   private
 
+  attr_writer :number
+
   # shortcut for repeating call, dont't need to call ourselves
   def stations_list
-    @route.get_stations_list
+    @route.stations_list
   end
 
   def validate!

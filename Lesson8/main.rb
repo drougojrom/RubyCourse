@@ -25,8 +25,8 @@ def remove_station
   return unless (selected_route = @created_routes[r_index])
 
   puts 'Select a station which you want to remove'
-  selected_route.get_stations_list.each do |station|
-    if station.trains_list.empty?
+  selected_route.stations_list.each do |station|
+    if station.trains.empty?
       puts "#{index} - #{station.name}"
       index += 1
     end
@@ -102,7 +102,7 @@ end
 def show_routes
   index = 1
   @created_routes.each do |route|
-    puts "#{index} - #{route.get_stations_list}"
+    puts "#{index} - #{route.stations_list}"
   end
 end
 
@@ -219,7 +219,7 @@ def add_station_to_route
   show_routes
   route_index = gets.to_i - 1
   if (route = @created_routes[route_index])
-    available_stations = @created_stations.reject { |station| route.get_stations_list.include? station }
+    available_stations = @created_stations.reject { |station| route.stations_list.include? station }
     if available_stations.empty?
       puts 'All created stations are already included into the route'
     else
@@ -232,7 +232,7 @@ def add_station_to_route
       selected_index = gets.to_i
       selected_station = available_stations[selected_index - 1]
       @created_routes[route_index].add_station(selected_station,
-                                               @created_routes[route_index].get_stations_list.length - 1)
+                                               @created_routes[route_index].stations_list.length - 1)
       puts 'Route updated!'
     end
   else
