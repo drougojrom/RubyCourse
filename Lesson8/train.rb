@@ -41,7 +41,7 @@ class Train
     @wagons.pop
   end
 
-  def get_length
+  def wagons_length
     @wagons.length
   end
 
@@ -51,7 +51,7 @@ class Train
     end
   end
 
-  def set_route(route)
+  def add_route(route)
     @route = route
     stations_list.first.accept_train(self)
     @current_station = stations_list.first

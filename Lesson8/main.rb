@@ -74,7 +74,7 @@ def show_stations
     puts "#{index} - #{station.name}"
     station.trains_list do |train|
       puts "Train#{train.type}:#{train.number}"
-      puts "wagons number is #{train.wagons.length}"
+      puts "wagons number is #{train.wagons_length}"
     end
     index += 1
   end
@@ -83,7 +83,7 @@ end
 def show_trains
   index = 1
   @created_trains.each do |train|
-    puts "#{index} - Train#{train.type}:#{train.number}wagons number is #{train.wagons.length}"
+    puts "#{index} - Train#{train.type}:#{train.number} wagons number is #{train.wagons_length}"
     unless train.wagons.empty?
       puts 'That train has the following wagons:'
       train.wagons_list do |wagon|
@@ -278,7 +278,7 @@ def add_route_to_train
     end
     selected_available_train_index = gets.to_i - 1
     selected_available_train = available_trains[selected_available_train_index]
-    if @created_trains[selected_available_train_index].set_route(selected_route)
+    if @created_trains[selected_available_train_index].add_route(selected_route)
       puts "Route #{selected_route}, added for a train #{selected_available_train}"
     end
   else
