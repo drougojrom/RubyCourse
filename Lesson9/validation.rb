@@ -5,34 +5,39 @@ module Validation
   end
 
   module ClassMethods
-    def validate(attribute, validation, arg)
-      define_method "#{attribute}=" do |value|
-        case validation
-        when :presence
-          raise 'Invalid attribute' unless !value.nil?
-        when :format
-          raise 'Invalid format' if value !~ arg
-        when :type
-          raise 'Invalid type' unless value.instance_of? validation
-      end
+    attr_accessor :validators
+
+    def validate(*args)
+      @validators ||= []
+      @validators << args
     end
   end
 
   module InstanceMethods
     def validate!
+      self.class.validators.each do |value|
+        val = instance_variable_get("@#{value}".to_sym)
+        send value[1].to_sym, val, value[2]
+      end
     end
 
     def valid?
+      validate!
+      true
+    rescue
+      false
     end
 
-    def validate_presence
+    def presence(value, arg = nil)
       raise 'Invalid attribute' unless !value.nil?
     end
 
-    def validate_format
+    def format(value, arg = nil)
+      raise 'Invalid format' if value !~ arg
     end
 
-    def validate_type
+    def type(value, arg = nil)
+      raise 'Invalid type' unless value.instance_of? arg
     end
   end
 end
