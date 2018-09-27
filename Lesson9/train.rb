@@ -1,12 +1,15 @@
 require './station.rb'
 require './route.rb'
 require './producer_company.rb'
-require 'pry'
+require './acсessors.rb'
+require './validation.rb'
 
 # Train docs
 class Train
   include ProducerCompany
   include InstanceCounter
+  include Validation
+  extend Accessors
 
   @@trains = []
 
@@ -14,6 +17,8 @@ class Train
   attr_reader :type, :number
 
   NUMBER_FORMAT = /([a-zA-Z]|[0-9]){3}+(-?)+([a-zA-Z]|[0-9]){2}\b/
+
+  validate :number, :format, NUMBER_FORMAT
 
   def self.find(number)
     @@trains.select { |train| train.number == number }.first
@@ -101,13 +106,6 @@ class Train
     end
   end
 
-  def valid?
-    validate!
-    true
-  rescue StandardError
-    false
-  end
-
   private
 
   attr_writer :number
@@ -115,9 +113,5 @@ class Train
   # shortcut for repeating call, dont't need to call ourselves
   def stations_list
     @route.stations_list
-  end
-
-  def validate!
-    raise ArgumentError, 'Number has invalid format' if @number !~ NUMBER_FORMAT
   end
 end

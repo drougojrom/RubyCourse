@@ -3,6 +3,8 @@ require './cargo_train.rb'
 require './passenger_wagon.rb'
 require './passenger_train.rb'
 require './instance_counter.rb'
+require './acсessors.rb'
+require './validation.rb'
 
 # Main docs
 

@@ -1,8 +1,14 @@
+require './acсessors.rb'
+require './validation.rb'
+
 # Route docs
 class Route
   include InstanceCounter
+  include Validation
 
   attr_reader :start_station, :end_station
+
+  validate :stations, :type, Station
 
   def initialize(start_station, end_station)
     @start_station = start_station
@@ -24,25 +30,5 @@ class Route
 
   def stations_list
     @stations
-  end
-
-  def valid?
-    validate!
-    true
-  rescue StandardError
-    false
-  end
-
-  private
-
-  def validate!
-    raise ArgumentError, "Start station can't be nil" if @start_station.nil?
-    raise ArgumentError, "End station can't be nil" if @end_station.nil?
-
-    @stations.each do |station|
-      unless station.instance_of? Station
-        raise ArgumentError, 'Should contain only stations'
-      end
-    end
   end
 end

@@ -1,3 +1,4 @@
+require 'pry'
 # Instance counter docs
 module InstanceCounter
   def self.included(base)

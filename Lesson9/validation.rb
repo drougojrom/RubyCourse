@@ -1,3 +1,5 @@
+require 'pry'
+
 module Validation
   def self.included(base)
     base.extend ClassMethods
@@ -8,15 +10,18 @@ module Validation
     attr_accessor :validators
 
     def validate(*args)
-      @validators ||= []
-      @validators << args
+      klass = self
+      klass.validators ||= []
+      klass.validators << args
     end
   end
 
   module InstanceMethods
+    protected
+
     def validate!
       self.class.validators.each do |value|
-        val = instance_variable_get("@#{value}".to_sym)
+        val = instance_variable_get("@#{value[0]}".to_sym)
         send value[1].to_sym, val, value[2]
       end
     end
@@ -28,16 +33,20 @@ module Validation
       false
     end
 
-    def presence(value, arg = nil)
-      raise 'Invalid attribute' unless !value.nil?
+    def presence(value, _arg = nil)
+      raise ArgumentError.new 'Invalid attribute' unless !value.empty?
     end
 
     def format(value, arg = nil)
-      raise 'Invalid format' if value !~ arg
+      raise ArgumentError.new 'Invalid format' if value !~ arg
     end
 
     def type(value, arg = nil)
-      raise 'Invalid type' unless value.instance_of? arg
+      value.each do |station|
+        unless station.instance_of? Station
+          raise ArgumentError, 'Should contain only stations'
+        end
+      end
     end
   end
 end

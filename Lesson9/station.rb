@@ -1,10 +1,16 @@
 require './instance_counter.rb'
+require './acсessors.rb'
+require './validation.rb'
 
 # Station docs
 class Station
   include InstanceCounter
+  include Validation
+  extend Accessors
 
   attr_reader :name, :trains
+
+  validate :name, :presence
 
   @@stations = []
 
@@ -18,13 +24,6 @@ class Station
     validate!
     @@stations << self
     register_instance
-  end
-
-  def valid?
-    validate!
-    true
-  rescue StandardError
-    false
   end
 
   def accept_train(train)
@@ -43,11 +42,5 @@ class Station
 
   def send_train
     @trains.pop
-  end
-
-  private
-
-  def validate!
-    raise ArgumentError, "Name can't be nil!" if @name.empty?
   end
 end
