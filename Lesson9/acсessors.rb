@@ -13,4 +13,13 @@ module Accessors
       end
     "
   end
+
+  def strong_attr_accessor(name, klass)
+    var_name = "@#{name}".to_sym
+    define_method(name) { instance_variable_get(var_name) }
+    define_method("#{name}=".to_sym) do |value|
+      raise ArgumentError "The class doesn't match" unless value.is_a? klass
+      instance_variable_set(var_name, value)
+    end
+  end
 end
