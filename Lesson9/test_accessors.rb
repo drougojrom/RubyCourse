@@ -1,5 +1,4 @@
 require './accessors.rb'
-require 'pry'
 
 class TestAccessors
   include Accessors
