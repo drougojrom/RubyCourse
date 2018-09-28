@@ -1,25 +1,30 @@
 module Accessors
-  def attr_accessor_with_history
-    attr_name = attr_name.to_s
-    attr_reader attr_name
-    attr_reader attr_name+"_history"
-    class_eval %Q"
-      def #{attr_name}=(value)
-        if !defined? @#{attr_name}_history
-          @#{attr_name}_history = [@#{attr_name}]
-        end
-        @#{attr_name} = value
-        @#{attr_name}_history << value
-      end
-    "
+  def self.included(base)
+    base.extend ClassMethods
   end
 
-  def strong_attr_accessor(name, klass)
-    var_name = "@#{name}".to_sym
-    define_method(name) { instance_variable_get(var_name) }
-    define_method("#{name}=".to_sym) do |value|
-      raise ArgumentError "The class doesn't match" unless value.is_a? klass
-      instance_variable_set(var_name, value)
+  module ClassMethods
+    def attr_accessor_with_history(*args)
+      args.each do |name|
+        var_name = "@#{name}".to_sym
+        define_method(var_name) { instance_variable_get(name) }
+        define_method("#{name}=".to_sym) do |value|
+          instance_variable_set(var_name, value)
+          @history ||= {}
+          @history[name] ||= []
+          @history[name].push value
+        end
+        define_method("#{name}_history") { @history[name] }
+      end
+    end
+
+    def strong_attr_accessor(name, klass)
+      var_name = "@#{name}".to_sym
+      define_method(name) { instance_variable_get(var_name) }
+      define_method("#{name}=".to_sym) do |value|
+        raise ArgumentError "The class doesn't match" unless value.is_a? klass
+        instance_variable_set(var_name, value)
+      end
     end
   end
 end
