@@ -1,5 +1,3 @@
-require 'pry'
-
 module Validation
   def self.included(base)
     base.extend ClassMethods
@@ -17,8 +15,6 @@ module Validation
   end
 
   module InstanceMethods
-    protected
-
     def validate!
       self.class.validators.each do |value|
         val = instance_variable_get("@#{value[0]}".to_sym)
@@ -33,6 +29,8 @@ module Validation
       false
     end
 
+    private
+
     def presence(value, _arg = nil)
       raise ArgumentError.new 'Invalid attribute' unless !value.empty?
     end
@@ -42,11 +40,15 @@ module Validation
     end
 
     def type(value, arg = nil)
-      value.each do |station|
-        unless station.instance_of? Station
-          raise ArgumentError, 'Should contain only stations'
+      if value.is_a?
+        value.each do |station|
+          unless station.instance_of? arg
+            raise ArgumentError.new 'Should contain only stations'
+          end
+        end
+      else
+        unless value.instance_of? arg raise ArgumentError.new 'Type does not match'
         end
       end
     end
   end
-end
