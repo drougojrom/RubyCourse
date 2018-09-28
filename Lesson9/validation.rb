@@ -47,8 +47,8 @@ module Validation
           end
         end
       else
-        unless value.instance_of? arg raise ArgumentError.new 'Type does not match'
-        end
+        raise ArgumentError.new 'Type does not match' unless value.instance_of? arg
       end
     end
   end
+end
