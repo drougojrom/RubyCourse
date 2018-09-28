@@ -40,7 +40,8 @@ module Validation
     end
 
     def type(value, arg = nil)
-      if value.is_a?
+      if value.kind_of?(Array)
+        binding.pry
         value.each do |station|
           unless station.instance_of? arg
             raise ArgumentError.new 'Should contain only stations'
