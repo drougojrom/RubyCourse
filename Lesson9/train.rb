@@ -18,8 +18,8 @@ class Train
 
   NUMBER_FORMAT = /([a-zA-Z]|[0-9]){3}+(-?)+([a-zA-Z]|[0-9]){2}\b/
 
-  validate :number, :validate_format, NUMBER_FORMAT
-  validate :speed, :validate_type, Integer
+  validate :number, :format, NUMBER_FORMAT
+  validate :speed, :type, Integer
 
   def self.find(number)
     @@trains.select { |train| train.number == number }.first

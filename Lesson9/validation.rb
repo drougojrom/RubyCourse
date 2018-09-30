@@ -21,7 +21,7 @@ module Validation
     def validate!
       self.class.validators.each do |value|
         attr = instance_variable_get("@#{value[:attr]}".to_sym)
-        send value[:type].to_sym, attr, value[:option]
+        send "validate_#{value[:type].to_s}".to_sym, attr, value[:option]
       end
     end
 
@@ -32,7 +32,7 @@ module Validation
       false
     end
 
-    def presence(value, _arg = nil)
+    def validate_presence(value, _arg = nil)
       raise ArgumentError.new 'Invalid attribute' if value.nil? || value.empty?
     end
 
@@ -44,7 +44,7 @@ module Validation
       raise ArgumentError.new 'Type does not match' unless value.instance_of? arg
     end
 
-    def contain_only(value, arg = nil)
+    def validate_contain_only(value, arg = nil)
       raise ArgumentError.new "Doesn't contain same values" unless value.all? { |v| v.is_a?(arg) }
     end
   end
