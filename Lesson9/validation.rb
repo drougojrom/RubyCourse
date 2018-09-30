@@ -33,7 +33,7 @@ module Validation
     end
 
     def presence(value, _arg = nil)
-      raise ArgumentError.new 'Invalid attribute' if !value.nil?
+      raise ArgumentError.new 'Invalid attribute' if value.nil?
     end
 
     def format(value, arg)
