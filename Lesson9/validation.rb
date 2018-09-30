@@ -33,7 +33,7 @@ module Validation
     end
 
     def presence(value, _arg = nil)
-      raise ArgumentError.new 'Invalid attribute' unless !value.empty?
+      raise ArgumentError.new 'Invalid attribute' unless !value.nil?
     end
 
     def format(value, arg)
@@ -42,6 +42,10 @@ module Validation
 
     def i_type(value, arg)
       raise ArgumentError.new 'Type does not match' unless value.instance_of? arg
+    end
+
+    def contain_only(value, arg)
+      raise ArgumentError.new "Doesn't contain same values" if value.uniq.length == 1
     end
   end
 end
