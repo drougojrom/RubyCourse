@@ -11,7 +11,7 @@ class Station
   attr_reader :name, :trains
 
   validate :name, :presence
-  validate :name, :i_type, String
+  validate :name, :validate_type, String
 
   @@stations = []
 
