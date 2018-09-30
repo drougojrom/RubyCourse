@@ -14,7 +14,7 @@ module Accessors
           @history[name] ||= []
           @history[name].push value
         end
-        define_method("#{name}_history") { @history[name] }
+        define_method("#{name}_history") { @history[name] unless @history.nil? }
       end
     end
 
